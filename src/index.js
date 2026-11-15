@@ -1,4 +1,4 @@
-const teaStrains = [
+  const teaStrains = [
   "Earl Grey",
   "English Breakfast",
   "Irish Breakfast",
@@ -145,7 +145,7 @@ const bonuses = [
   "+2 Storytelling"
 ];
 
-const chaosEvents = [
+const cozyComplications = [
   "You spend five minutes looking for your drink before realizing it's in your hand.",
   "You discover a snack you specifically bought for a special occasion and forgot about.",
   "A simple conversation somehow turns into the greatest idea nobody will ever act on.",
@@ -197,30 +197,28 @@ function randomItem(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-module.exports = {
-  name: "teatime",
-  description: "Roll a randomized teatime experience.",
-
-  execute(message) {
+export default {
+  async fetch() {
     const category = randomItem(beverageCategories);
     const beverage = randomItem(category.options);
     const vibe = randomItem(cannabisVibes);
     const bonus = randomItem(bonuses);
-    const chaos = randomItem(chaosEvents);
+    const complication = randomItem(cozyComplications);
 
-    message.reply(
-`🍵 **TEATIME**
+    const result =
+      `🍵 TEATIME | ` +
+      `Category: ${category.name} | ` +
+      `Beverage: ${beverage} | ` +
+      `🌿 Vibe: ${vibe} | ` +
+      `✨ Bonus: ${bonus} | ` +
+      `🫖😅 Cozy Complication: ${complication} | ` +
+      `🍃 It's probably 4:20 somewhere.`;
 
-**Category:** ${category.name}
-**Beverage:** ${beverage}
-
-🌿 **Vibe:** ${vibe}
-✨ **Bonus:** ${bonus}
-
-🫖😅 **Cozy Complication**
-${chaos}
-
-🍃 It's probably 4:20 somewhere.`
-    );
-  }
-};
+    return new Response(result, {
+      headers: {
+            "Content-Type": "text/plain;
+              charset=UTF-8"
+          }
+        });
+      }
+    };
